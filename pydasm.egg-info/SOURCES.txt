@@ -1,0 +1,9 @@
+README.md
+pydasm.c
+setup.py
+./libdasm/libdasm.c
+libdasm/libdasm.c
+pydasm.egg-info/PKG-INFO
+pydasm.egg-info/SOURCES.txt
+pydasm.egg-info/dependency_links.txt
+pydasm.egg-info/top_level.txt
