@@ -245,18 +245,23 @@ long int get_long_attribute(PyObject *o, char *attr_name)
 PyObject *create_class(char *class_name)
 {
     PyObject *pClass;
-    PyObject *pClassBases = PyTuple_New(0); // An empty tuple for bases is equivalent to `(object,)`
+    
     PyObject *pClassDict = PyDict_New();
     PyObject *pClassName = PyBytes_FromString(class_name);
-    
-    //pClass = PyClass_New(NULL, pClassDict, pClassName);
+#if PY_MAJOR_VERSION < 3
+    pClass = PyClass_New(NULL, pClassDict, pClassName);
+#else
+    PyObject *pClassBases = PyTuple_New(0); // An empty tuple for bases is equivalent to `(object,)`
     pClass = PyObject_CallFunctionObjArgs((PyObject*)&PyType_Type, pClassName, pClassBases, pClassDict, NULL);
+#endif
     if(!check_object(pClass))
         return NULL;
         
     Py_DECREF(pClassDict);
     Py_DECREF(pClassName);
+#if PY_MAJOR_VERSION >= 3
     Py_CLEAR(pClassBases);
+#endif
     
     return pClass;
 }
